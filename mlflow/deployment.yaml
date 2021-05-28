@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlflow-deployment
+  namespace: kubeflow
+spec:
+  selector:
+    matchLabels:
+      app: mlflow
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mlflow
+        version: v1
+    spec:
+      serviceAccountName: mlflow
+      imagePullSecrets:
+        - name: aws-ecr-credentials
+      containers:
+        - name: mlflow
+          image: mlflow:1.14.1
+          workingDir: /opt/mlflow
+          command: ["/bin/sh"]
+          args: ["-c","mlflow server --host $(SERVER_HOST) --port $(SERVER_PORT) --backend-store-uri sqlite:///mydb.sqlite"]
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /dev/shm
+              name: dshm
+          envFrom:
+            - configMapRef:
+                name: mlflow-config
+          env:
+          - name: AWS_DEFAULT_REGION
+            value: ap-southeast-1
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "4"
+              nvidia.com/gpu: "0"
+            requests:
+              cpu: "1"
+        - name: mlflow-nginx
+          image: nginx:1.17.6
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
+            - name: nginx-conf
+              mountPath: /etc/nginx/sites-enabled/mlflow.conf
+              subPath: mlflow.conf
+              readOnly: true
+            - name: nginx-conf
+              mountPath: /etc/nginx/.htpasswd
+              subPath: .htpasswd
+              readOnly: true
+          ports:
+            - name: http-nginx
+              containerPort: 80
+              protocol: TCP
+      volumes:
+        - emptyDir:
+            medium: Memory
+          name: dshm  
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf # place ConfigMap `nginx-conf` on /etc/nginx
+---

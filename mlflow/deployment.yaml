@@ -15,8 +15,6 @@ spec:
         version: v1
     spec:
       serviceAccountName: mlflow
-      imagePullSecrets:
-        - name: aws-ecr-credentials
       containers:
         - name: mlflow
           image: mlflow:1.14.1

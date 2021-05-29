@@ -20,7 +20,7 @@ spec:
           image: mlflow:1.14.1
           workingDir: /opt/mlflow
           command: ["/bin/sh"]
-          args: ["-c","mlflow server --host $(SERVER_HOST) --port $(SERVER_PORT) --backend-store-uri sqlite:///mydb.sqlite --default-artifact-root /mnt/mlruns/"]
+          args: ["-c","mlflow server --host $SERVER_HOST --port $SERVER_PORT --backend-store-uri sqlite:///mydb.sqlite --default-artifact-root /mnt/mlruns/"]
           imagePullPolicy: Never
           volumeMounts:
             - mountPath: /dev/shm

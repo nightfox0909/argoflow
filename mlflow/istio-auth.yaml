@@ -1,0 +1,12 @@
+kind: AuthorizationPolicy
+apiVersion: security.istio.io/v1beta1
+metadata:
+  name: mlflow-service
+  namespace: kubeflow
+spec:
+  action: ALLOW
+  rules:
+    - {}
+  selector:
+    matchLabels:
+      app: mlflow

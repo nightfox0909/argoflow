@@ -9,7 +9,7 @@ resources:
 # - argocd-applications/nginx.yaml
 # - argocd-applications/nvidia-gpu-operator.yaml
 - argocd-applications/argocd.yaml
-- argocd-applications/istio.yaml
+# - argocd-applications/istio.yaml
 # to use upstream istio comment out line above
 # and uncomment the next two line
 - argocd-applications/istio-upstream.yaml

@@ -2,11 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- github.com/kubeflow/manifests/common/istio-1-9-0/istio-namespace/base
-- github.com/kubeflow/manifests/common/istio-1-9-0/istio-crds/base
-- github.com/kubeflow/manifests/common/istio-1-9-0/istio-install/base
-- github.com/kubeflow/manifests/common/istio-1-9-0/cluster-local-gateway/base
-- github.com/kubeflow/manifests/common/istio-1-9-0/kubeflow-istio-resources/base
+- github.com/kubeflow/manifests/common/istio-1-9-0/istio-namespace/base?ref=ef8e7e0c8c5266743116a51b991e31b1a2b24c7a
+- github.com/kubeflow/manifests/common/istio-1-9-0/istio-crds/base?ref=ef8e7e0c8c5266743116a51b991e31b1a2b24c7a
+- github.com/kubeflow/manifests/common/istio-1-9-0/istio-install/base?ref=ef8e7e0c8c5266743116a51b991e31b1a2b24c7a
+- github.com/kubeflow/manifests/common/istio-1-9-0/cluster-local-gateway/base?ref=ef8e7e0c8c5266743116a51b991e31b1a2b24c7a
+- github.com/kubeflow/manifests/common/istio-1-9-0/kubeflow-istio-resources/base?ref=ef8e7e0c8c5266743116a51b991e31b1a2b24c7a
 - ingress-certificate.yaml
 
 patchesStrategicMerge:
